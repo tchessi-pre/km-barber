@@ -222,8 +222,8 @@ export function ServicesSection() {
             </motion.div>
 
             {/* Info */}
-            <div className="flex flex-col gap-6">
-              <div className="mb-2">
+            <div className="flex flex-col gap-6 lg:gap-8">
+              <div className="mb-2 text-center lg:text-left">
                 <h3 className="font-serif text-3xl font-bold text-foreground">Nous trouver</h3>
                 <p className="mt-2 text-foreground/60">
                   Situé au cœur de Marseille, notre salon est facilement accessible. Venez profiter d'une ambiance détendue et professionnelle.
@@ -236,12 +236,12 @@ export function ServicesSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="group flex gap-4 rounded-xl border border-border/50 bg-background p-5 transition-all hover:border-primary/30 hover:shadow-md hover:bg-primary/5"
+                className="group flex flex-col gap-4 rounded-xl border border-border/50 bg-background p-5 text-center transition-all hover:border-primary/30 hover:bg-primary/5 hover:shadow-md sm:flex-row sm:text-left"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <div className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground sm:mx-0">
                   <MapPin className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-serif text-lg font-semibold text-foreground">Adresse</h3>
                   <p className="mt-1 text-foreground/70 leading-relaxed">
                     8 Rue de Lyon
@@ -252,7 +252,7 @@ export function ServicesSection() {
                     href="https://maps.google.com/?q=8+Rue+de+Lyon+13015+Marseille+France"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary transition-opacity hover:opacity-80 group-hover:underline"
+                    className="mt-3 inline-flex items-center justify-center gap-2 text-sm font-medium text-primary transition-opacity hover:opacity-80 group-hover:underline sm:justify-start"
                   >
                     Itinéraire
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -268,13 +268,13 @@ export function ServicesSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="group flex gap-4 rounded-xl border border-border/50 bg-background p-5 transition-all hover:border-primary/30 hover:shadow-md hover:bg-primary/5"
+                className="group flex flex-col gap-4 rounded-xl border border-border/50 bg-background p-5 transition-all hover:border-primary/30 hover:bg-primary/5 hover:shadow-md sm:flex-row"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <div className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground sm:mx-0">
                   <Clock className="h-5 w-5" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-serif text-lg font-semibold text-foreground">
+                  <h3 className="font-serif text-lg font-semibold text-foreground text-center sm:text-left">
                     Horaires d'ouverture
                   </h3>
                   <ul className="mt-3 space-y-2">

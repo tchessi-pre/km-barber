@@ -141,6 +141,11 @@ export function GallerySection() {
     }),
   }
 
+  const swipeConfidenceThreshold = 10000
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity
+  }
+
   return (
     <section id="galerie" className="bg-secondary py-20 lg:py-28 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -260,6 +265,18 @@ export function GallerySection() {
                   transition={{
                     x: { type: "spring", stiffness: 300, damping: 30 },
                     opacity: { duration: 0.2 },
+                  }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={1}
+                  onDragEnd={(e, { offset, velocity }) => {
+                    const swipe = swipePower(offset.x, velocity.x)
+
+                    if (swipe < -swipeConfidenceThreshold) {
+                      goToNext()
+                    } else if (swipe > swipeConfidenceThreshold) {
+                      goToPrevious()
+                    }
                   }}
                   className="absolute inset-0 h-full w-full"
                 >

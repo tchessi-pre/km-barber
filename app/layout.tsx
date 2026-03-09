@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://km-barber.fr'),
+  metadataBase: new URL('https://km-barber.vercel.app'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'K.M Barber Chez Elvis | L\'excellence de la coiffure Afro & Urbaine',
     description: 'Expertise, précision et passion pour votre style. Retrouvez-nous au 8 Rue de Lyon, 13015 Marseille.',
-    url: 'https://km-barber.fr',
+    url: 'https://km-barber.vercel.app',
     siteName: 'K.M Barber Chez Elvis',
     locale: 'fr_FR',
     type: 'website',
@@ -88,9 +88,9 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'HairSalon',
     name: 'K.M Barber Chez Elvis',
-    image: 'https://km-barber.fr/icon.png',
-    '@id': 'https://km-barber.fr',
-    url: 'https://km-barber.fr',
+    image: 'https://km-barber.vercel.app/icon.png',
+    '@id': 'https://km-barber.vercel.app',
+    url: 'https://km-barber.vercel.app',
     telephone: '+33600000000', // To be updated
     address: {
       '@type': 'PostalAddress',

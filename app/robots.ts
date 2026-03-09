@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://km-barber.fr/sitemap.xml',
+    sitemap: 'https://km-barber.vercel.app/sitemap.xml',
   }
 }
