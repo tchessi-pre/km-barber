@@ -13,22 +13,37 @@ const navLinks = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState("#accueil")
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
+
+      // Active section detection
+      const sections = navLinks.map(link => link.href.substring(1))
+      const scrollPosition = window.scrollY + 100
+
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element &&
+          element.offsetTop <= scrollPosition &&
+          (element.offsetTop + element.offsetHeight) > scrollPosition) {
+          setActiveSection(`#${section}`)
+          break
+        }
+      }
     }
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-lg border-b border-border/50 py-3"
-          : "bg-transparent py-5"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-background/95 backdrop-blur-lg border-b border-border/50 py-3"
+        : "bg-transparent py-5"
+        }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
@@ -67,7 +82,16 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="relative px-4 py-2 text-sm font-medium uppercase tracking-wider text-foreground/70 transition-colors hover:text-primary after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-primary after:transition-all after:duration-300 hover:after:w-1/2"
+              onClick={(e) => {
+                e.preventDefault()
+                const element = document.querySelector(link.href)
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' })
+                  setActiveSection(link.href)
+                }
+              }}
+              className={`relative px-4 py-2 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary after:absolute after:bottom-0 after:left-1/2 after:h-px after:-translate-x-1/2 after:bg-primary after:transition-all after:duration-300 hover:after:w-1/2 ${activeSection === link.href ? "text-primary after:w-1/2" : "text-foreground/70 after:w-0"
+                }`}
             >
               {link.label}
             </a>
@@ -92,9 +116,8 @@ export function Header() {
 
       {/* Mobile nav */}
       <div
-        className={`overflow-hidden transition-all duration-300 md:hidden ${
-          mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`overflow-hidden transition-all duration-300 md:hidden ${mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <nav
           className="border-t border-border/50 bg-background/95 backdrop-blur-lg px-6 py-4"
@@ -104,8 +127,17 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setMobileOpen(false)}
-              className="block py-3 text-sm font-medium uppercase tracking-wider text-foreground/70 transition-colors hover:text-primary"
+              onClick={(e) => {
+                e.preventDefault()
+                setMobileOpen(false)
+                const element = document.querySelector(link.href)
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' })
+                  setActiveSection(link.href)
+                }
+              }}
+              className={`block py-3 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${activeSection === link.href ? "text-primary" : "text-foreground/70"
+                }`}
             >
               {link.label}
             </a>

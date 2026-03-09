@@ -1,5 +1,8 @@
+"use client"
+
 import { MapPin, Clock, Phone, Scissors, Sparkles } from "lucide-react"
 import { getWhatsAppRDVLink } from "@/lib/products"
+import { motion } from "framer-motion"
 
 const services = [
   {
@@ -77,178 +80,229 @@ const services = [
 ]
 
 const hours = [
-  { day: "Lundi", time: "Fermé" },
+  { day: "Lundi", time: "09h00 - 19h00" },
   { day: "Mardi", time: "09h00 - 19h00" },
   { day: "Mercredi", time: "09h00 - 19h00" },
   { day: "Jeudi", time: "09h00 - 19h00" },
   { day: "Vendredi", time: "09h00 - 19h00" },
   { day: "Samedi", time: "09h00 - 18h00" },
-  { day: "Dimanche", time: "Fermé" },
+  { day: "Dimanche", time: "09h00 - 19h00" },
 ]
 
 export function ServicesSection() {
   return (
-    <section id="services" className="bg-card py-24">
+    <section id="services" className="bg-card py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section header */}
         <div className="mb-16 text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-primary">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-3 text-sm uppercase tracking-[0.3em] text-primary"
+          >
             Nos Services
-          </p>
-          <h2 className="font-serif text-4xl font-bold text-foreground md:text-5xl">
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-serif text-4xl font-bold text-foreground md:text-5xl"
+          >
             <span className="text-balance">Coiffure Africaine</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-foreground/60">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mx-auto mt-4 max-w-2xl text-foreground/60"
+          >
             Spécialistes de la coiffure africaine et masculine. Des coupes classiques aux styles les plus tendances.
-          </p>
+          </motion.p>
         </div>
 
         {/* Services grid */}
         <div className="mb-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {services.map((service) => (
-            <div
+          {services.map((service, index) => (
+            <motion.div
               key={service.title}
-              className="group relative overflow-hidden rounded-lg border border-border/50 bg-background p-6 transition-all duration-300 hover:border-primary/30 hover:bg-primary/5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="group relative overflow-hidden rounded-lg border border-border/50 bg-background p-6 transition-all duration-300 hover:border-primary/30 hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="mb-4 flex items-center justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/20">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/20 group-hover:scale-110 duration-300">
                   <service.icon className="h-5 w-5" />
                 </div>
                 <span className="font-serif text-2xl font-bold text-primary">
                   {service.price}
                 </span>
               </div>
-              <h3 className="font-serif text-lg font-semibold text-foreground">
+              <h3 className="font-serif text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
               <p className="mt-2 text-sm text-foreground/60 leading-relaxed">
                 {service.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Divider */}
-        <div className="mb-20 flex items-center justify-center gap-4">
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20 flex items-center justify-center gap-4"
+        >
           <div className="h-px flex-1 bg-border" />
           <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 text-primary">
             <MapPin className="h-4 w-4" />
           </div>
           <div className="h-px flex-1 bg-border" />
-        </div>
+        </motion.div>
 
         {/* Location section */}
-        <div className="grid items-start gap-12 lg:grid-cols-2">
-          {/* Google Maps */}
-          <div className="relative overflow-hidden rounded-lg border border-border/50">
-            <div className="aspect-[4/3]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2902.8!2d5.3664!3d43.3284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c9c0b8f8b8b8b8%3A0x0!2s8%20Rue%20de%20Lyon%2C%2013015%20Marseille%2C%20France!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Localisation K.M Barber Chez Elvis"
-                className="absolute inset-0"
-              />
-            </div>
-            {/* Overlay badge */}
-            <div className="absolute bottom-4 left-4 right-4 rounded-lg border border-primary/20 bg-background/95 p-4 backdrop-blur-sm">
-              <p className="text-center text-sm font-medium text-foreground">
-                8 Rue de Lyon, 13015 Marseille
-              </p>
-            </div>
-          </div>
-
-          {/* Info */}
-          <div className="flex flex-col gap-8">
-            {/* Address */}
-            <div className="flex gap-4 rounded-lg border border-border/50 bg-background p-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <MapPin className="h-5 w-5" />
+        <div className="rounded-2xl border border-border/50 bg-background/50 p-6 backdrop-blur-sm lg:p-10">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
+            {/* Google Maps */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative overflow-hidden rounded-xl border border-border/50 shadow-2xl"
+            >
+              <div className="aspect-[4/3] w-full">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2902.8!2d5.3664!3d43.3284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c9c0b8f8b8b8b8%3A0x0!2s8%20Rue%20de%20Lyon%2C%2013015%20Marseille%2C%20France!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Localisation K.M Barber Chez Elvis"
+                  className="absolute inset-0 h-full w-full grayscale transition-all duration-500 hover:grayscale-0"
+                />
               </div>
-              <div>
-                <h3 className="font-serif text-lg font-semibold text-foreground">Adresse</h3>
-                <p className="mt-1 text-foreground/70 leading-relaxed">
-                  8 Rue de Lyon
-                  <br />
-                  13015 Marseille, France
+              {/* Overlay badge */}
+              <div className="absolute bottom-4 left-4 right-4 rounded-lg border border-primary/20 bg-background/95 p-4 backdrop-blur-sm shadow-lg">
+                <div className="flex items-center justify-center gap-2">
+                  <MapPin className="h-4 w-4 text-primary" />
+                  <p className="text-center text-sm font-medium text-foreground">
+                    8 Rue de Lyon, 13015 Marseille
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Info */}
+            <div className="flex flex-col gap-6">
+              <div className="mb-2">
+                <h3 className="font-serif text-3xl font-bold text-foreground">Nous trouver</h3>
+                <p className="mt-2 text-foreground/60">
+                  Situé au cœur de Marseille, notre salon est facilement accessible. Venez profiter d'une ambiance détendue et professionnelle.
                 </p>
-                <a
-                  href="https://maps.google.com/?q=8+Rue+de+Lyon+13015+Marseille+France"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary transition-opacity hover:opacity-80"
-                >
-                  Voir sur Google Maps
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
               </div>
-            </div>
 
-            {/* Hours */}
-            <div className="flex gap-4 rounded-lg border border-border/50 bg-background p-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Clock className="h-5 w-5" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif text-lg font-semibold text-foreground">
-                  Horaires
-                </h3>
-                <ul className="mt-3 space-y-2">
-                  {hours.map(({ day, time }) => (
-                    <li
-                      key={day}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <span className="text-foreground/70">{day}</span>
-                      <span
-                        className={
-                          time === "Fermé"
-                            ? "text-foreground/40"
-                            : "font-medium text-foreground"
-                        }
+              {/* Address */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="group flex gap-4 rounded-xl border border-border/50 bg-background p-5 transition-all hover:border-primary/30 hover:shadow-md hover:bg-primary/5"
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-semibold text-foreground">Adresse</h3>
+                  <p className="mt-1 text-foreground/70 leading-relaxed">
+                    8 Rue de Lyon
+                    <br />
+                    13015 Marseille, France
+                  </p>
+                  <a
+                    href="https://maps.google.com/?q=8+Rue+de+Lyon+13015+Marseille+France"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary transition-opacity hover:opacity-80 group-hover:underline"
+                  >
+                    Itinéraire
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </motion.div>
+
+              {/* Hours */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="group flex gap-4 rounded-xl border border-border/50 bg-background p-5 transition-all hover:border-primary/30 hover:shadow-md hover:bg-primary/5"
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-serif text-lg font-semibold text-foreground">
+                    Horaires d'ouverture
+                  </h3>
+                  <ul className="mt-3 space-y-2">
+                    {hours.map(({ day, time }) => (
+                      <li
+                        key={day}
+                        className="flex items-center justify-between text-sm border-b border-border/30 pb-1 last:border-0 last:pb-0"
                       >
-                        {time}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                        <span className="text-foreground/70 font-medium">{day}</span>
+                        <span
+                          className={
+                            time === "Fermé"
+                              ? "text-red-500/70 font-medium"
+                              : "font-semibold text-foreground"
+                          }
+                        >
+                          {time}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
 
-            {/* WhatsApp CTA */}
-            <div className="flex gap-4 rounded-lg border border-primary/30 bg-primary/5 p-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
-                <Phone className="h-5 w-5" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif text-lg font-semibold text-foreground">
-                  Rendez-vous
-                </h3>
-                <p className="mt-1 text-sm text-foreground/60 leading-relaxed">
-                  Prenez rendez-vous directement via WhatsApp pour un service rapide.
-                </p>
+              {/* WhatsApp CTA */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex flex-col gap-4 sm:flex-row"
+              >
                 <a
                   href={getWhatsAppRDVLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25"
+                  className="group flex flex-1 items-center justify-center gap-3 rounded-xl bg-[#25D366] px-6 py-4 text-white shadow-lg transition-all hover:bg-[#128C7E] hover:shadow-xl hover:scale-[1.02]"
                 >
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                  Prendre RDV
+                  <Phone className="h-5 w-5" />
+                  <span className="font-semibold">Prendre RDV sur WhatsApp</span>
                 </a>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section >
   )
 }
