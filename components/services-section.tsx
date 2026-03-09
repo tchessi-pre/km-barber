@@ -3,6 +3,7 @@
 import { MapPin, Clock, Phone, Scissors, Sparkles } from "lucide-react"
 import { getWhatsAppRDVLink } from "@/lib/products"
 import { motion } from "framer-motion"
+import { useState } from "react"
 
 const services = [
   {
@@ -90,6 +91,8 @@ const hours = [
 ]
 
 export function ServicesSection() {
+  const [showMap, setShowMap] = useState(false)
+
   return (
     <section id="services" className="bg-card py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -180,17 +183,32 @@ export function ServicesSection() {
               className="relative overflow-hidden rounded-xl border border-border/50 shadow-2xl"
             >
               <div className="aspect-[4/3] w-full">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2902.8!2d5.3664!3d43.3284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c9c0b8f8b8b8b8%3A0x0!2s8%20Rue%20de%20Lyon%2C%2013015%20Marseille%2C%20France!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Localisation K.M Barber Chez Elvis"
-                  className="absolute inset-0 h-full w-full grayscale transition-all duration-500 hover:grayscale-0"
-                />
+                {showMap ? (
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2902.8!2d5.3664!3d43.3284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c9c0b8f8b8b8b8%3A0x0!2s8%20Rue%20de%20Lyon%2C%2013015%20Marseille%2C%20France!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Localisation K.M Barber Chez Elvis"
+                    className="absolute inset-0 h-full w-full grayscale transition-all duration-500 hover:grayscale-0"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/20 text-center backdrop-blur-[2px]">
+                    <button
+                      onClick={() => setShowMap(true)}
+                      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-primary px-8 py-3 text-sm font-semibold uppercase tracking-widest text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
+                    >
+                      <MapPin className="h-4 w-4" />
+                      <span>Charger la carte</span>
+                    </button>
+                    <p className="mt-4 max-w-[200px] text-xs text-foreground/40">
+                      Cliquez pour activer la carte interactive Google Maps
+                    </p>
+                  </div>
+                )}
               </div>
               {/* Overlay badge */}
               <div className="absolute bottom-4 left-4 right-4 rounded-lg border border-primary/20 bg-background/95 p-4 backdrop-blur-sm shadow-lg">

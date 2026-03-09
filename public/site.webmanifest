@@ -1,0 +1,16 @@
+{
+    "name": "K.M Barber Chez Elvis",
+    "short_name": "K.M Barber",
+    "icons": [
+        {
+            "src": "/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "theme_color": "#0d0d0d",
+    "background_color": "#0d0d0d",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+}
