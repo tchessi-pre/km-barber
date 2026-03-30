@@ -15,27 +15,56 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("#accueil")
 
+  const navigateToHash = (hash: string) => {
+    const element = document.querySelector(hash)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+    if (window.location.hash !== hash) {
+      window.history.pushState(null, "", hash)
+    }
+    setActiveSection(hash)
+  }
+
   useEffect(() => {
+    const sections = navLinks.map((link) => link.href.substring(1))
+    let ticking = false
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 50)
 
-      // Active section detection
-      const sections = navLinks.map(link => link.href.substring(1))
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element &&
-          element.offsetTop <= scrollPosition &&
-          (element.offsetTop + element.offsetHeight) > scrollPosition) {
-          setActiveSection(`#${section}`)
-          break
+        const scrollPosition = window.scrollY + 100
+        for (const section of sections) {
+          const element = document.getElementById(section)
+          if (
+            element &&
+            element.offsetTop <= scrollPosition &&
+            element.offsetTop + element.offsetHeight > scrollPosition
+          ) {
+            setActiveSection(`#${section}`)
+            break
+          }
         }
-      }
+
+        ticking = false
+      })
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    if (!window.location.hash) return
+    const hash = window.location.hash
+    if (navLinks.some((l) => l.href === hash) || hash === "#contact") {
+      setActiveSection(hash)
+    }
   }, [])
 
   return (
@@ -84,11 +113,7 @@ export function Header() {
               href={link.href}
               onClick={(e) => {
                 e.preventDefault()
-                const element = document.querySelector(link.href)
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' })
-                  setActiveSection(link.href)
-                }
+                navigateToHash(link.href)
               }}
               className={`relative px-4 py-2 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary after:absolute after:bottom-0 after:left-1/2 after:h-px after:-translate-x-1/2 after:bg-primary after:transition-all after:duration-300 hover:after:w-1/2 ${activeSection === link.href ? "text-primary after:w-1/2" : "text-foreground/70 after:w-0"
                 }`}
@@ -98,6 +123,10 @@ export function Header() {
           ))}
           <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault()
+              navigateToHash("#contact")
+            }}
             className="ml-4 rounded-full border border-primary bg-primary/10 px-5 py-2 text-sm font-semibold uppercase tracking-wider text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
           >
             RDV
@@ -130,11 +159,7 @@ export function Header() {
               onClick={(e) => {
                 e.preventDefault()
                 setMobileOpen(false)
-                const element = document.querySelector(link.href)
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' })
-                  setActiveSection(link.href)
-                }
+                navigateToHash(link.href)
               }}
               className={`block py-3 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${activeSection === link.href ? "text-primary" : "text-foreground/70"
                 }`}
@@ -144,7 +169,11 @@ export function Header() {
           ))}
           <a
             href="#contact"
-            onClick={() => setMobileOpen(false)}
+            onClick={(e) => {
+              e.preventDefault()
+              setMobileOpen(false)
+              navigateToHash("#contact")
+            }}
             className="mt-2 block w-full rounded-full border border-primary bg-primary/10 py-3 text-center text-sm font-semibold uppercase tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground"
           >
             Prendre RDV

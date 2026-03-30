@@ -1,10 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useEffect, useCallback } from "react"
+import type React from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@/lib/utils"
 
 const galleryImages = [
   {
@@ -21,6 +20,11 @@ const galleryImages = [
     src: "/images/gallery/haircut-3.jpg",
     alt: "Coupe afro avec lineup",
     category: "Coupe",
+  },
+  {
+    src: "/images/gallery/beautiful-woman-getting-her-hair.jpg",
+    alt: " une femme en train de se faire un coup de coiffure dans un salon de coiffure beautique",
+    category: "Tresses africaines",
   },
   {
     src: "/images/gallery/afro-twists.jpg",
@@ -67,15 +71,29 @@ const galleryImages = [
     alt: "Design capillaire artistique",
     category: "Design",
   },
+  {
+    src: "/images/gallery/afro-kids.jpeg",
+    alt: "Coupe afro pour enfants et adolescents",
+    category: "Design",
+  },
+  {
+    src: "/images/gallery/afro-man-braids.jpeg",
+    alt: "Tresses pour homme",
+    category: "Tresses",
+  },
+  {
+    src: "/images/gallery/degradé.jpeg",
+    alt: "Dégradé afro moderne",
+    category: "Coupe",
+  },
 ]
 
 export function GallerySection() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [direction, setDirection] = useState(0)
+  const touchStartXRef = useRef<number | null>(null)
 
   const openLightbox = (index: number) => {
-    setDirection(0)
     setCurrentIndex(index)
     setLightboxOpen(true)
   }
@@ -85,14 +103,12 @@ export function GallerySection() {
   }
 
   const goToPrevious = useCallback(() => {
-    setDirection(-1)
     setCurrentIndex((prev) =>
       prev === 0 ? galleryImages.length - 1 : prev - 1
     )
   }, [])
 
   const goToNext = useCallback(() => {
-    setDirection(1)
     setCurrentIndex((prev) =>
       prev === galleryImages.length - 1 ? 0 : prev + 1
     )
@@ -124,26 +140,24 @@ export function GallerySection() {
     }
   }, [lightboxOpen])
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? null
   }
 
-  const swipeConfidenceThreshold = 10000
-  const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const startX = touchStartXRef.current
+    touchStartXRef.current = null
+    if (startX == null) return
+    const endX = e.changedTouches[0]?.clientX
+    if (endX == null) return
+
+    const deltaX = endX - startX
+    const threshold = 50
+    if (deltaX > threshold) {
+      goToPrevious()
+    } else if (deltaX < -threshold) {
+      goToNext()
+    }
   }
 
   return (
@@ -151,35 +165,19 @@ export function GallerySection() {
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="font-serif text-3xl font-bold text-foreground md:text-4xl lg:text-5xl"
-          >
+          <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
             Nos <span className="text-primary">Réalisations</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mx-auto mt-4 max-w-2xl text-muted-foreground"
-          >
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Découvrez le savoir-faire de notre équipe à travers nos créations
-          </motion.p>
+          </p>
         </div>
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {galleryImages.map((image, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
               onClick={() => openLightbox(index)}
               className="group relative aspect-square cursor-pointer overflow-hidden rounded-xl bg-muted"
             >
@@ -200,132 +198,100 @@ export function GallerySection() {
                   {image.category}
                 </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur-md"
-            onClick={closeLightbox}
-          >
-            {/* Controls */}
-            <div className="absolute right-4 top-4 z-50 flex gap-2">
-              <button
-                onClick={closeLightbox}
-                className="rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20 backdrop-blur-sm"
-                aria-label="Fermer"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
+      {lightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur-md"
+          onClick={closeLightbox}
+        >
+          {/* Controls */}
+          <div className="absolute right-4 top-4 z-50 flex gap-2">
+            <button
+              onClick={closeLightbox}
+              className="rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20 backdrop-blur-sm"
+              aria-label="Fermer"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
 
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              goToPrevious()
+            }}
+            className="absolute left-4 z-50 hidden rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 backdrop-blur-sm md:block"
+            aria-label="Image précédente"
+          >
+            <ChevronLeft className="h-8 w-8" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              goToNext()
+            }}
+            className="absolute right-4 z-50 hidden rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 backdrop-blur-sm md:block"
+            aria-label="Image suivante"
+          >
+            <ChevronRight className="h-8 w-8" />
+          </button>
+
+          {/* Main Image Container */}
+          <div
+            className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-lg shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <Image
+              src={galleryImages[currentIndex].src}
+              alt={galleryImages[currentIndex].alt}
+              fill
+              className="object-contain"
+              sizes="100vw"
+              priority
+            />
+
+            {/* Caption */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center">
+              <h3 className="text-xl font-bold text-white">
+                {galleryImages[currentIndex].alt}
+              </h3>
+              <p className="mt-1 text-sm text-gray-300">
+                {currentIndex + 1} / {galleryImages.length}
+              </p>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="absolute bottom-20 flex w-full justify-between px-4 md:hidden">
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 goToPrevious()
               }}
-              className="absolute left-4 z-50 hidden rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 backdrop-blur-sm md:block"
-              aria-label="Image précédente"
+              className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm"
             >
-              <ChevronLeft className="h-8 w-8" />
+              <ChevronLeft className="h-6 w-6" />
             </button>
-
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 goToNext()
               }}
-              className="absolute right-4 z-50 hidden rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 backdrop-blur-sm md:block"
-              aria-label="Image suivante"
+              className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm"
             >
-              <ChevronRight className="h-8 w-8" />
+              <ChevronRight className="h-6 w-6" />
             </button>
-
-            {/* Main Image Container */}
-            <div
-              className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-lg shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <AnimatePresence initial={false} custom={direction}>
-                <motion.div
-                  key={currentIndex}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 },
-                  }}
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={1}
-                  onDragEnd={(e, { offset, velocity }) => {
-                    const swipe = swipePower(offset.x, velocity.x)
-
-                    if (swipe < -swipeConfidenceThreshold) {
-                      goToNext()
-                    } else if (swipe > swipeConfidenceThreshold) {
-                      goToPrevious()
-                    }
-                  }}
-                  className="absolute inset-0 h-full w-full"
-                >
-                  <Image
-                    src={galleryImages[currentIndex].src}
-                    alt={galleryImages[currentIndex].alt}
-                    fill
-                    className="object-contain"
-                    sizes="100vw"
-                    priority
-                  />
-
-                  {/* Caption */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 text-center">
-                    <h3 className="text-xl font-bold text-white">
-                      {galleryImages[currentIndex].alt}
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-300">
-                      {currentIndex + 1} / {galleryImages.length}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Mobile Navigation */}
-            <div className="absolute bottom-20 flex w-full justify-between px-4 md:hidden">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  goToPrevious()
-                }}
-                className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  goToNext()
-                }}
-                className="rounded-full bg-white/10 p-3 text-white backdrop-blur-sm"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

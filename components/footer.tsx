@@ -3,7 +3,7 @@ import { getWhatsAppRDVLink } from "@/lib/products"
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-background py-16">
+    <footer id="contact" className="border-t border-border bg-background py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           {/* Brand */}

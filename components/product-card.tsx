@@ -17,17 +17,9 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Product info */}
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-serif text-lg font-semibold text-foreground">
-            {product.name}
-          </h3>
-          <span className="shrink-0 text-lg font-bold text-primary">
-            {product.price.toFixed(2)} &euro;
-          </span>
-        </div>
-        <p className="flex-1 text-sm leading-relaxed text-muted-foreground">
-          {product.description}
-        </p>
+        <h3 className="font-serif text-lg font-semibold text-foreground">
+          {product.name}
+        </h3>
         <a
           href={getWhatsAppLink(product)}
           target="_blank"

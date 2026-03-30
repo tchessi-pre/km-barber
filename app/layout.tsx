@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { ScrollToTop } from "@/components/scroll-to-top"
-import { Preloader } from "@/components/preloader"
 
 import './globals.css'
 
@@ -91,7 +90,7 @@ export default function RootLayout({
     image: 'https://km-barber.vercel.app/icon.png',
     '@id': 'https://km-barber.vercel.app',
     url: 'https://km-barber.vercel.app',
-    telephone: '+33600000000', // To be updated
+    telephone: '+33753116215',
     address: {
       '@type': 'PostalAddress',
       streetAddress: '8 Rue de Lyon',
@@ -123,7 +122,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Preloader />
         {children}
         <ScrollToTop />
       </body>
