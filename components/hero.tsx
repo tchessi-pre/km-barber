@@ -31,9 +31,9 @@ export function Hero() {
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         {/* Top badge */}
-        <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-primary/30 bg-primary/5 px-5 py-2 backdrop-blur-sm">
+        <div className="mb-8 hidden items-center gap-3 rounded-full border border-primary/30 bg-primary/5 px-5 py-2 backdrop-blur-sm sm:inline-flex">
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-          <span className="hidden text-xs font-medium uppercase tracking-[0.25em] text-primary sm:inline">
+          <span className="text-xs font-medium uppercase tracking-[0.25em] text-primary">
             Barbershop Marseille
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
