@@ -62,10 +62,16 @@ export function Hero() {
         </h1>
 
         {/* Tagline */}
-        <p className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-foreground/60 sm:text-lg md:text-xl">
-          {"L'excellence de la coiffure Afro & Urbaine à Marseille."}
-          <br className="hidden sm:block" />
-          <span className="text-foreground/80">Expertise, précision et passion pour votre style.</span>
+        <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-foreground/80 sm:text-lg md:text-xl">
+          <span className="block text-balance">
+            {"L'excellence de la coiffure Afro & Urbaine à Marseille."}
+          </span>
+          <span className="mt-3 block text-foreground/70">
+            Expertise, précision et passion pour votre style.
+          </span>
+          <span className="mt-5 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+            Sans rendez-vous
+          </span>
         </p>
 
         {/* CTA buttons */}

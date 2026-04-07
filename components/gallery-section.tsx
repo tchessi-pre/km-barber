@@ -91,9 +91,11 @@ const galleryImages = [
 export function GallerySection() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isImageLoading, setIsImageLoading] = useState(false)
   const touchStartXRef = useRef<number | null>(null)
 
   const openLightbox = (index: number) => {
+    setIsImageLoading(true)
     setCurrentIndex(index)
     setLightboxOpen(true)
   }
@@ -103,12 +105,14 @@ export function GallerySection() {
   }
 
   const goToPrevious = useCallback(() => {
+    setIsImageLoading(true)
     setCurrentIndex((prev) =>
       prev === 0 ? galleryImages.length - 1 : prev - 1
     )
   }, [])
 
   const goToNext = useCallback(() => {
+    setIsImageLoading(true)
     setCurrentIndex((prev) =>
       prev === galleryImages.length - 1 ? 0 : prev + 1
     )
@@ -139,6 +143,19 @@ export function GallerySection() {
       document.body.style.overflow = "unset"
     }
   }, [lightboxOpen])
+
+  useEffect(() => {
+    if (!lightboxOpen) return
+    if (typeof window === "undefined") return
+    const nextIndex = currentIndex === galleryImages.length - 1 ? 0 : currentIndex + 1
+    const prevIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1
+
+    const preloadNext = new window.Image()
+    preloadNext.src = galleryImages[nextIndex].src
+
+    const preloadPrev = new window.Image()
+    preloadPrev.src = galleryImages[prevIndex].src
+  }, [lightboxOpen, currentIndex])
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0]?.clientX ?? null
@@ -221,6 +238,7 @@ export function GallerySection() {
           </div>
 
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation()
               goToPrevious()
@@ -232,6 +250,7 @@ export function GallerySection() {
           </button>
 
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation()
               goToNext()
@@ -253,7 +272,9 @@ export function GallerySection() {
               src={galleryImages[currentIndex].src}
               alt={galleryImages[currentIndex].alt}
               fill
-              className="object-contain"
+              onLoad={() => setIsImageLoading(false)}
+              className={`object-contain transition-opacity duration-200 ease-out ${isImageLoading ? "opacity-0" : "opacity-100"
+                }`}
               sizes="100vw"
               priority
             />
@@ -272,6 +293,7 @@ export function GallerySection() {
           {/* Mobile Navigation */}
           <div className="absolute bottom-20 flex w-full justify-between px-4 md:hidden">
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation()
                 goToPrevious()
@@ -281,6 +303,7 @@ export function GallerySection() {
               <ChevronLeft className="h-6 w-6" />
             </button>
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation()
                 goToNext()

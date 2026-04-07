@@ -1,5 +1,4 @@
-import { MapPin, Clock, Phone, Scissors, Sparkles } from "lucide-react"
-import { getWhatsAppRDVLink } from "@/lib/products"
+import { MapPin, Clock, Scissors, Sparkles } from "lucide-react"
 
 const services = [
   {
@@ -215,19 +214,6 @@ export function ServicesSection() {
                     ))}
                   </ul>
                 </div>
-              </div>
-
-              {/* WhatsApp CTA */}
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <a
-                  href={getWhatsAppRDVLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-1 items-center justify-center gap-3 rounded-xl bg-[#25D366] px-6 py-4 text-white shadow-lg transition-all hover:bg-[#128C7E] hover:shadow-xl hover:scale-[1.02]"
-                >
-                  <Phone className="h-5 w-5" />
-                  <span className="font-semibold">Prendre RDV sur WhatsApp</span>
-                </a>
               </div>
             </div>
           </div>

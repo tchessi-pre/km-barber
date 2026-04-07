@@ -121,16 +121,6 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault()
-              navigateToHash("#contact")
-            }}
-            className="ml-4 rounded-full border border-primary bg-primary/10 px-5 py-2 text-sm font-semibold uppercase tracking-wider text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
-          >
-            RDV
-          </a>
         </nav>
 
         {/* Mobile menu toggle */}
@@ -167,17 +157,6 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault()
-              setMobileOpen(false)
-              navigateToHash("#contact")
-            }}
-            className="mt-2 block w-full rounded-full border border-primary bg-primary/10 py-3 text-center text-sm font-semibold uppercase tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground"
-          >
-            Prendre RDV
-          </a>
         </nav>
       </div>
     </header>
