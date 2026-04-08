@@ -24,15 +24,18 @@ export const metadata: Metadata = {
   description:
     'Salon de coiffure homme et barbier à Marseille 13015. Spécialiste coupe Afro, dégradé américain, taille de barbe et soins. Ambiance urbaine et expertise professionnelle.',
   keywords: [
+    'K.M Barber',
+    'Chez Elvis',
     'Barbier Marseille',
     'Coiffeur Homme Marseille',
     'Coiffeur Afro Marseille',
+    'Coiffeur Afro Marseille 13015',
+    'Coiffeur Afro rue de Lyon Marseille',
+    'Coifeur Rue de Lyon Marseille',
     'Coupe Homme 13015',
     'Barber Shop Marseille',
     'Taille de barbe Marseille',
     'Dégradé américain',
-    'K.M Barber',
-    'Chez Elvis',
   ],
   authors: [{ name: 'K.M Barber' }],
   creator: 'K.M Barber',
@@ -55,7 +58,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/icon.png',
+        url: '/preview.png',
         width: 512,
         height: 512,
         alt: 'K.M Barber Chez Elvis',
@@ -67,7 +70,7 @@ export const metadata: Metadata = {
     title: 'K.M Barber Chez Elvis | Barbershop Marseille',
     description: 'Le rendez-vous des hommes stylés à Marseille. Coupes, barbes et soins.',
     creator: '@kmbarber',
-    images: ['/icon.png'],
+    images: ['/preview.png'],
   },
   verification: {
     google: '4cU-KW-SsiC_mSkPY0i8T9PQQtl8QtCVn0FSkM7I-Yk',
