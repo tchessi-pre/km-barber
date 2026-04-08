@@ -23,7 +23,7 @@ export const products: Product[] = Array.from({ length: KM_PRODUCT_COUNT }, (_, 
 
 export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "33753116215"
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://km-barber.vercel.app").replace(/\/$/, "")
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kmbarber-chezelvis.fr").replace(/\/$/, "")
 
 export function getWhatsAppLink(product: Product): string {
   const imageUrl = `${SITE_URL}${product.image}`

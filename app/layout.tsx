@@ -42,23 +42,35 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://km-barber.vercel.app'),
+  metadataBase: new URL('https://www.kmbarber-chezelvis.fr'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'K.M Barber Chez Elvis | L\'excellence de la coiffure Afro & Urbaine',
     description: 'Expertise, précision et passion pour votre style. Retrouvez-nous au 8 Rue de Lyon, 13015 Marseille.',
-    url: 'https://km-barber.vercel.app',
+    url: 'https://www.kmbarber-chezelvis.fr',
     siteName: 'K.M Barber Chez Elvis',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: '/icon.png',
+        width: 512,
+        height: 512,
+        alt: 'K.M Barber Chez Elvis',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'K.M Barber Chez Elvis | Barbershop Marseille',
     description: 'Le rendez-vous des hommes stylés à Marseille. Coupes, barbes et soins.',
     creator: '@kmbarber',
+    images: ['/icon.png'],
+  },
+  verification: {
+    google: '4cU-KW-SsiC_mSkPY0i8T9PQQtl8QtCVn0FSkM7I-Yk',
   },
   robots: {
     index: true,
@@ -87,9 +99,9 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'HairSalon',
     name: 'K.M Barber Chez Elvis',
-    image: 'https://km-barber.vercel.app/icon.png',
-    '@id': 'https://km-barber.vercel.app',
-    url: 'https://km-barber.vercel.app',
+    image: 'https://www.kmbarber-chezelvis.fr/preview.png',
+    '@id': 'https://www.kmbarber-chezelvis.fr/#business',
+    url: 'https://www.kmbarber-chezelvis.fr',
     telephone: '+33753116215',
     address: {
       '@type': 'PostalAddress',
@@ -103,16 +115,20 @@ export default function RootLayout({
       latitude: 43.3284,
       longitude: 5.3664,
     },
+    hasMap: 'https://maps.google.com/?q=8+Rue+de+Lyon+13015+Marseille+France',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         opens: '09:00',
         closes: '20:00',
       },
     ],
     priceRange: '€€',
-    servesCuisine: 'Coupe homme, Barbe, Soins',
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: 'Marseille',
+    },
   }
 
   return (
